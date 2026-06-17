@@ -22,17 +22,18 @@ public class JwtProvider {
 
     public JwtProvider(
             @Value("${jwt.secret}") String key,
-            @Value("${jwt.access-token-expiry}") long accessTokenExpiry,
-            @Value("${jwt.refresh-token-expiry}") long refreshTokenExpiry) {
+            @Value("${jwt.access-token-expiration}") long accessTokenExpiry,
+            @Value("${jwt.refresh-token-expiration}") long refreshTokenExpiry) {
         this.key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(key));
         this.accessTokenExpiry = accessTokenExpiry;
         this.refreshTokenExpiry = refreshTokenExpiry;
     }
 
-    public String generateAccessToken(Long userId, String userType) {
+    public String generateAccessToken(Long userId, String userStatus, String userRole) {
         return Jwts.builder()
                 .subject(String.valueOf(userId))
-                .claim("type", userType)
+                .claim("type", userStatus)
+                .claim("role", userRole)
                 .claim("tokenType", "ACCESS")
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + accessTokenExpiry))

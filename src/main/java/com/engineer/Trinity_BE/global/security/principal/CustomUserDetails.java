@@ -14,15 +14,18 @@ import java.util.List;
 public class CustomUserDetails implements UserDetails {
 
     private final Long userId;
+    private final String userStatus;
     private final String userRole;
 
     public CustomUserDetails(User user) {
         this.userId = user.getId();
+        this.userStatus = user.getStatus().name();
         this.userRole = user.getRole().name();
     }
 
-    public CustomUserDetails(Long userId, String userRole) {
+    public CustomUserDetails(Long userId, String userStatus, String userRole) {
         this.userId = userId;
+        this.userStatus = userStatus;
         this.userRole = userRole;
     }
 
