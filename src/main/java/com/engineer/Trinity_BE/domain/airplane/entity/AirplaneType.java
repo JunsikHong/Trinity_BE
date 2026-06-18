@@ -19,4 +19,8 @@ public class AirplaneType {
     @Column(name = "name")
     private String name;
 
+    public void changeName(String name) {
+        this.name = name;
+    }
+
 }

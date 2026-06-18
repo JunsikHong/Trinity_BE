@@ -35,4 +35,9 @@ public class Airplane {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    public void change(AirplaneType airplaneType, String registrationNumber) {
+        this.airplaneType = airplaneType;
+        this.registrationNumber = registrationNumber;
+    }
+
 }
