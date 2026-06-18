@@ -9,6 +9,7 @@ import com.engineer.Trinity_BE.global.enums.FileExtension;
 import com.engineer.Trinity_BE.global.security.principal.CustomUserDetails;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +18,7 @@ import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Locale;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MaintenanceReportFileService {
@@ -91,6 +93,19 @@ public class MaintenanceReportFileService {
     public MaintenanceReportFile getById(Long fileId) {
         return maintenanceReportFileRepository.findById(fileId)
                 .orElseThrow(() -> new MaintenanceException("파일을 찾을 수 없습니다. id = " + fileId, HttpStatus.NOT_FOUND));
+    }
+
+    @Transactional
+    public void deleteFile(Long fileId, CustomUserDetails userDetails) {
+        MaintenanceReportFile file = getById(fileId);
+
+        try {
+            validateDeletePermission(file, userDetails);
+        } catch (AccessDeniedException e) {
+            log.error(e.getMessage());
+        }
+
+        deleteInternal(file);
     }
 
     @Transactional

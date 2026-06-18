@@ -11,9 +11,9 @@ import java.util.Optional;
 
 public interface MaintenanceReportRepository extends JpaRepository<MaintenanceReport, Long> {
 
-    @Query("select r from maintenance_report r join fetch r.user order by r.id desc")
+    @Query("select r from MaintenanceReport r join fetch r.user order by r.id desc")
     List<MaintenanceReport> findAllWithUser();
 
-    @Query("select r from maintenance_report r join fetch r.user join fetch r.airplane where r.id = :id")
+    @Query("select r from MaintenanceReport r join fetch r.user join fetch r.airplane where r.id = :id")
     Optional<MaintenanceReport> findByIdWithUserAndAirplane(@Param("id") Long id);
 }
