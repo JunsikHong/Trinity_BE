@@ -1,7 +1,5 @@
 package com.engineer.Trinity_BE.global.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter
