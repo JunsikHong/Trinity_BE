@@ -14,6 +14,9 @@ public interface MaintenanceReportRepository extends JpaRepository<MaintenanceRe
     @Query("select r from MaintenanceReport r join fetch r.user order by r.id desc")
     List<MaintenanceReport> findAllWithUser();
 
+    @Query("select mr from MaintenanceReport mr join fetch mr.user where mr.airplane.id = :airplaneId order by mr.createdAt desc")
+    List<MaintenanceReport> findAllByAirplaneIdWithUser(@Param("airplaneId") Long airplaneId);
+
     @Query("select r from MaintenanceReport r join fetch r.user join fetch r.airplane where r.id = :id")
     Optional<MaintenanceReport> findByIdWithUserAndAirplane(@Param("id") Long id);
 }

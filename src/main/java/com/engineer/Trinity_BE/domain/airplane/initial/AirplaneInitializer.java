@@ -37,5 +37,14 @@ public class AirplaneInitializer {
                             .build()
             );
         }
+
+        if(!airplaneRepository.existsByRegistrationNumber("HL2345")) {
+            airplaneRepository.save(
+                    Airplane.builder()
+                            .airplaneType(airplaneType)
+                            .registrationNumber("HL2345")
+                            .build()
+            );
+        }
     }
 }

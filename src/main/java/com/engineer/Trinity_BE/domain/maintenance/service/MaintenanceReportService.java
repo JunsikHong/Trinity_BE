@@ -112,8 +112,8 @@ public class MaintenanceReportService {
     }
 
     @Transactional
-    public List<MaintenanceReportListResponse> findAll() {
-        return maintenanceReportRepository.findAllWithUser()
+    public List<MaintenanceReportListResponse> findAll(Long airplaneId) {
+        return maintenanceReportRepository.findAllByAirplaneIdWithUser(airplaneId)
                 .stream()
                 .map(MaintenanceReportListResponse::from)
                 .toList();

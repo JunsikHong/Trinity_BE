@@ -57,8 +57,10 @@ public class MaintenanceReportController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<MaintenanceReportListResponse>>> findAll() {
-        List<MaintenanceReportListResponse> response = maintenanceReportService.findAll();
+    public ResponseEntity<ApiResponse<List<MaintenanceReportListResponse>>> findAll(
+            @RequestParam(required = false) Long airplaneId
+    ) {
+        List<MaintenanceReportListResponse> response = maintenanceReportService.findAll(airplaneId);
         return ResponseEntity.ok(ApiResponse.success("정비 이력 목록 조회에 성공했습니다.", response));
     }
 
