@@ -80,4 +80,28 @@ public class MaintenanceReport {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    public void update(Airplane airplane,
+                       Double chapter,
+                       Double station,
+                       Double waterLine,
+                       Double buttockLine,
+                       Double stringer,
+                       Double frame,
+                       Double rib,
+                       Double wingStation,
+                       Double bodyStation,
+                       String description) {
+        this.airplane = airplane;
+        this.chapter = chapter;
+        this.station = station;
+        this.waterLine = waterLine;
+        this.buttockLine = buttockLine;
+        this.stringer = stringer;
+        this.frame = frame;
+        this.rib = rib;
+        this.wingStation = wingStation;
+        this.bodyStation = bodyStation;
+        this.description = description;
+    }
+
 }
