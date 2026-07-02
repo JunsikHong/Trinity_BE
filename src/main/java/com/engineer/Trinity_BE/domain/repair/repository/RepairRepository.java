@@ -1,6 +1,7 @@
 package com.engineer.Trinity_BE.domain.repair.repository;
 
 import com.engineer.Trinity_BE.domain.repair.entity.Repair;
+import com.engineer.Trinity_BE.domain.repair.entity.RepairValue;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

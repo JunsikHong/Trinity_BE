@@ -1,6 +1,5 @@
 package com.engineer.Trinity_BE.domain.repair.entity;
 
-import com.engineer.Trinity_BE.domain.airplane.entity.Airplane;
 import com.engineer.Trinity_BE.domain.airplane.entity.AirplaneType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,8 +15,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "repair_fields")
-public class RepairField {
+@Table(name = "repair_chapters")
+public class RepairChapter {
 
     @Id
     @Column(name = "id")
@@ -25,23 +24,14 @@ public class RepairField {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "repair_chapter_id", nullable = false)
-    private RepairChapter repairChapter;
+    @JoinColumn(name = "airplane_type_id", nullable = false)
+    private AirplaneType airplaneType;
 
-    @Column(name = "field_label")
-    private String fieldLabel;
+    @Column(name = "chapter_number")
+    private Integer chapterNumber;
 
-    @Column(name = "field_name")
-    private String fieldName;
-
-    @Column(name = "field_type")
-    private String fieldType;
-
-    @Column(name = "is_required")
-    private boolean isRequired;
-
-    @Column(name = "field_order")
-    private Integer fieldOrder;
+    @Column(name = "chapter_name")
+    private String chapterName;
 
     @Column(name = "is_active")
     private boolean isActive;

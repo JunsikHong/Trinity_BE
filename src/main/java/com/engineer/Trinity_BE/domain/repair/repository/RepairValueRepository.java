@@ -12,5 +12,8 @@ public interface RepairValueRepository extends JpaRepository<RepairValue, Long> 
     @Query("select v from RepairValue v join fetch v.repairField where v.repair.id = :repairId")
     List<RepairValue> findAllByRepairIdWithField(@Param("repairId") Long repairId);
 
+    @Query("select rv from RepairValue rv join fetch rv.repairField where rv.repair.id in :repairIds")
+    List<RepairValue> findAllByRepairIdsWithField(@Param("repairIds") List<Long> repairIds);
+
     void deleteAllByRepairId(Long repairId);
 }

@@ -3,6 +3,7 @@ package com.engineer.Trinity_BE.domain.repair.dto.request;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -11,13 +12,16 @@ import java.util.List;
 @AllArgsConstructor
 public class RepairRequest {
 
+    private Long repairId;
     private Long airplaneId;
     private String description;
-    private List<DynamicFieldValue> dynamicFieldValues;
+    private List<RepairValueRequest> values;
+    private List<Long> deleteFileIds;
 
     @Getter
-    public static class DynamicFieldValue {
-        private Long fieldId;
+    @Setter
+    public static class RepairValueRequest {
+        private Long repairFieldId;
         private String value;
     }
 }

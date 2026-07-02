@@ -18,9 +18,9 @@ public class RepairFieldController {
     private final RepairFieldService repairFieldService;
 
     @PreAuthorize("hasAnyRole('EDITOR', 'ADMIN')")
-    @GetMapping("/{airplaneId}")
+    @GetMapping("/{airplaneTypeId}")
     public ResponseEntity<ApiResponse<Void>> findAll(
-            @PathVariable Long airplaneId
+            @PathVariable Long airplaneTypeId
     ) {
         return ResponseEntity.ok(ApiResponse.success("정비이력 입력필드 조회에 성공하였습니다.", null));
     }
