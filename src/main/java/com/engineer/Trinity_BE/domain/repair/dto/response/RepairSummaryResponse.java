@@ -19,5 +19,6 @@ public class RepairSummaryResponse {
     private LocalDateTime updatedAt;
 
     private List<RepairValueResponse> repairValueResponses;
+    private List<RepairFuselageResponse> repairFuselageResponses;
     private RepairFileResponse repairFileResponse;
 }

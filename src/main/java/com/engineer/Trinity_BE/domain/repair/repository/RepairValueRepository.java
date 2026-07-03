@@ -9,11 +9,11 @@ import java.util.List;
 
 public interface RepairValueRepository extends JpaRepository<RepairValue, Long> {
 
-    @Query("select v from RepairValue v join fetch v.repairField where v.repair.id = :repairId")
-    List<RepairValue> findAllByRepairIdWithField(@Param("repairId") Long repairId);
+    @Query("select rv from RepairValue rv join fetch rv.repairField join fetch rv.repairField.chapter where rv.repair.id = :repairId")
+    List<RepairValue> findAllByRepairId(Long repairId);
 
-    @Query("select rv from RepairValue rv join fetch rv.repairField where rv.repair.id in :repairIds")
-    List<RepairValue> findAllByRepairIdsWithField(@Param("repairIds") List<Long> repairIds);
+    @Query("select rv from RepairValue rv join fetch rv.repairField join fetch rv.repairField.chapter where rv.repair.id in :repairIds")
+    List<RepairValue> findAllByRepairIds(List<Long> repairIds);
 
     void deleteAllByRepairId(Long repairId);
 }

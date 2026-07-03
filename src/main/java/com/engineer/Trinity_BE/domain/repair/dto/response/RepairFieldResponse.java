@@ -9,7 +9,7 @@ import java.util.List;
 @Builder
 public class RepairFieldResponse {
 
-    private Integer chapter;
+    private Long chapterId;
     private List<Field> fields;
 
     @Getter

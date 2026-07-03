@@ -15,7 +15,8 @@ public class RepairRequest {
     private Long repairId;
     private Long airplaneId;
     private String description;
-    private List<RepairValueRequest> values;
+    private List<RepairValueRequest> repairValueRequests;
+    private List<RepairFuselageRequest> repairFuselageRequests;
     private List<Long> deleteFileIds;
 
     @Getter
@@ -23,5 +24,14 @@ public class RepairRequest {
     public static class RepairValueRequest {
         private Long repairFieldId;
         private String value;
+    }
+
+    @Getter
+    @Setter
+    public static class RepairFuselageRequest {
+        private Double stationStart;
+        private Double stationEnd;
+        private Double stringerStart;
+        private Double stringerEnd;
     }
 }
