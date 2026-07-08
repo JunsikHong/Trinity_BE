@@ -29,6 +29,9 @@ public class RepairLocationItem {
     @JoinColumn(name = "repair_location_id", nullable = false)
     private RepairLocation repairLocation;
 
+    @Column(name = "value")
+    private String value;
+
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;

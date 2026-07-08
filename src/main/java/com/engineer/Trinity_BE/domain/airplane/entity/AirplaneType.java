@@ -16,11 +16,7 @@ public class AirplaneType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
-
-    public void changeName(String name) {
-        this.name = name;
-    }
 
 }

@@ -1,15 +1,21 @@
 package com.engineer.Trinity_BE.domain.airplane.controller;
 
-import com.engineer.Trinity_BE.domain.airplane.dto.request.AirplaneRequest;
 import com.engineer.Trinity_BE.domain.airplane.dto.response.AirplaneResponse;
+import com.engineer.Trinity_BE.domain.airplane.entity.Airplane;
+import com.engineer.Trinity_BE.domain.airplane.entity.AirplaneType;
 import com.engineer.Trinity_BE.domain.airplane.service.AirplaneService;
+import com.engineer.Trinity_BE.domain.airplane.service.AirplaneTypeService;
 import com.engineer.Trinity_BE.global.dto.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,33 +23,26 @@ import java.util.List;
 public class AirplaneController {
 
     private final AirplaneService airplaneService;
-
-    @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse<AirplaneResponse>> create(@RequestBody AirplaneRequest request) {
-        return ResponseEntity.ok(ApiResponse.success("CREATE_SUCCESS", airplaneService.create(request)));
-    }
+    private final AirplaneTypeService airplaneTypeService;
 
     @GetMapping
     public ResponseEntity<ApiResponse<List<AirplaneResponse>>> findAll() {
-        return ResponseEntity.ok(ApiResponse.success("FIND_ALL_SUCCESS", airplaneService.findAll()));
-    }
+        List<Airplane> airplanes = airplaneService.findAll();
+        List<AirplaneType> airplaneTypes = airplaneTypeService.findAll();
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<AirplaneResponse>> findOne(@PathVariable Long id) {
-        return ResponseEntity.ok(ApiResponse.success("FIND_ONE_SUCCESS", airplaneService.findById(id)));
-    }
+        Map<Long, AirplaneType> typeMap = airplaneTypes.stream()
+                .collect(Collectors.toMap(AirplaneType::getId, Function.identity()));
 
-    @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse<AirplaneResponse>> update(@PathVariable Long id, @RequestBody AirplaneRequest request) {
-        return ResponseEntity.ok(ApiResponse.success("UPDATE_SUCCESS", airplaneService.update(id, request)));
-    }
-
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse<?>> delete(@PathVariable Long id) {
-        airplaneService.delete(id);
-        return ResponseEntity.ok(ApiResponse.success("DELETE_SUCCESS", null));
+        List<AirplaneResponse> responses = airplanes.stream()
+                .map(airplane -> {
+                    AirplaneType type = typeMap.get(airplane.getAirplaneType().getId());
+                    return AirplaneResponse.builder()
+                            .id(airplane.getId())
+                            .registrationNumber(airplane.getRegistrationNumber())
+                            .airplaneTypeId(type.getId())
+                            .airplaneTypeName(type.getName())
+                            .build();
+                }).collect(Collectors.toList());
+        return ResponseEntity.ok(ApiResponse.success("AIRPLANE_LIST", responses));
     }
 }

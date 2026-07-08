@@ -19,16 +19,7 @@ public class RepairChapterService {
 
     private final RepairChapterRepository repairChapterRepository;
 
-    public List<RepairChapter> getChaptersByAirplaneType(Long airplaneTypeId) {
-        return repairChapterRepository.findByAirplaneTypeIdAndIsActiveOrderByChapterNumberAsc(airplaneTypeId);
-    }
-
-    public RepairChapter getChapter(Long repairChapterId) {
-        return repairChapterRepository.findById(repairChapterId)
-                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 Chapter 입니다."));
-    }
-
-    public ChapterType resolveChapterType(RepairChapter repairChapter) {
-        return ChapterType.valueOf(repairChapter.getChapterType());
+    public List<RepairChapter> findAllByAirplaneTypeId(Long airplaneTypeId) {
+        return repairChapterRepository.findAllByAirplaneTypeIdAndIsActive(airplaneTypeId);
     }
 }

@@ -1,13 +1,10 @@
 package com.engineer.Trinity_BE.repair;
 
 import com.engineer.Trinity_BE.domain.repair.dto.response.RepairDetailResponse;
-import com.engineer.Trinity_BE.domain.repair.dto.response.RepairFuselageResponse;
 import com.engineer.Trinity_BE.domain.repair.dto.response.RepairLocationResponse;
 import com.engineer.Trinity_BE.domain.repair.entity.Repair;
-import com.engineer.Trinity_BE.domain.repair.entity.RepairFuselage;
 import com.engineer.Trinity_BE.domain.repair.entity.RepairLocationItem;
 import com.engineer.Trinity_BE.domain.repair.enums.ChapterType;
-import com.engineer.Trinity_BE.domain.repair.service.RepairFuselageService;
 import com.engineer.Trinity_BE.domain.repair.service.RepairLocationItemService;
 import com.engineer.Trinity_BE.domain.repair.service.RepairService;
 import lombok.RequiredArgsConstructor;

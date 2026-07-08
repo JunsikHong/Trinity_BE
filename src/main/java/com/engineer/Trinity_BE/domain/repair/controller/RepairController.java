@@ -30,9 +30,9 @@ public class RepairController {
 
     @GetMapping("/chapters")
     public ResponseEntity<List<RepairChapterResponse>> getChapters(
-            @RequestParam Long airplanteTypeId
+            @RequestParam Long airplaneTypeId
     ) {
-        return ResponseEntity.ok(repairRead.getChapters(airplanteTypeId));
+        return ResponseEntity.ok(repairRead.getChapters(airplaneTypeId));
     }
 
     @GetMapping("/chapters/{repairChapterId}/input")

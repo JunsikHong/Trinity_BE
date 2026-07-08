@@ -45,8 +45,6 @@ public class Repair {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public void changeDescription(String description) {
-        this.description = description;
-    }
-
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 }

@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface RepairChapterRepository extends JpaRepository<RepairChapter, Long> {
 
-    List<RepairChapter> findByAirplaneTypeIdAndIsActiveOrderByChapterNumberAsc(Long airplaneTypeId);
-
+    List<RepairChapter> findAllByAirplaneTypeIdAndIsActive(Long airplaneTypeId);
 }

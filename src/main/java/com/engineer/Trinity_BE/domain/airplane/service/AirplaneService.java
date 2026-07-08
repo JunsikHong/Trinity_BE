@@ -1,13 +1,8 @@
 package com.engineer.Trinity_BE.domain.airplane.service;
 
-import com.engineer.Trinity_BE.domain.airplane.dto.request.AirplaneRequest;
-import com.engineer.Trinity_BE.domain.airplane.dto.response.AirplaneResponse;
 import com.engineer.Trinity_BE.domain.airplane.entity.Airplane;
-import com.engineer.Trinity_BE.domain.airplane.entity.AirplaneType;
 import com.engineer.Trinity_BE.domain.airplane.repository.AirplaneRepository;
-import com.engineer.Trinity_BE.domain.airplane.repository.AirplaneTypeRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +14,11 @@ public class AirplaneService {
 
     private final AirplaneRepository airplaneRepository;
 
-    public Airplane getAirplane(Long airplaneId) {
+    public List<Airplane> findAll() {
+        return airplaneRepository.findAll();
+    }
+
+    public Airplane findOne(Long airplaneId) {
         return airplaneRepository.findById(airplaneId)
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 비행기입니다."));
     }

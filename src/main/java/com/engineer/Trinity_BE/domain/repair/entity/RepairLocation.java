@@ -29,13 +29,7 @@ public class RepairLocation {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "displayOrder")
-    private boolean displayOrder;
-
     @Column(name = "is_active")
     private boolean isActive;
 
-    @CreationTimestamp
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
 }
