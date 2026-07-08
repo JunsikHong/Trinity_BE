@@ -1,15 +1,19 @@
 package com.engineer.Trinity_BE.domain.repair.dto.response;
 
-import lombok.Builder;
-import lombok.Getter;
+import com.engineer.Trinity_BE.domain.repair.entity.RepairFuselage;
 
-@Getter
-@Builder
-public class RepairFuselageResponse {
-
-    private Long repairFuselageId;
-    private Double stationStart;
-    private Double stationEnd;
-    private Double stringerStart;
-    private Double stringerEnd;
+public record RepairFuselageResponse(
+        Double stationStart,
+        Double stationEnd,
+        Double stringerStart,
+        Double stringerEnd
+) {
+    public static RepairFuselageResponse from(RepairFuselage repairFuselage) {
+        return new RepairFuselageResponse(
+                repairFuselage.getStationStart(),
+                repairFuselage.getStationEnd(),
+                repairFuselage.getStringerStart(),
+                repairFuselage.getStringerEnd()
+        );
+    }
 }

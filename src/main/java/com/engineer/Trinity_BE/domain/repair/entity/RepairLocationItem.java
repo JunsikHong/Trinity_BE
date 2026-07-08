@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -15,8 +14,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "repair_values")
-public class RepairValue {
+@Table(name = "repair_location_items")
+public class RepairLocationItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,11 +26,8 @@ public class RepairValue {
     private Repair repair;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "repair_field_id", nullable = false)
-    private RepairField repairField;
-
-    @Column(name = "value", columnDefinition = "TEXT")
-    private String value;
+    @JoinColumn(name = "repair_location_id", nullable = false)
+    private RepairLocation repairLocation;
 
     @CreationTimestamp
     @Column(name = "created_at")

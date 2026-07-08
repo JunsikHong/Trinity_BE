@@ -1,13 +1,19 @@
 package com.engineer.Trinity_BE.domain.repair.dto.response;
 
-import lombok.Builder;
-import lombok.Getter;
+import com.engineer.Trinity_BE.domain.repair.entity.RepairChapter;
 
-@Getter
-@Builder
-public class RepairChapterResponse {
-
-    private Long id;
-    private Integer chapterNumber;
-    private String chapterName;
+public record RepairChapterResponse (
+        Long id,
+        Integer chapterNumber,
+        String chapterName,
+        String chapterType
+) {
+    public static RepairChapterResponse from (RepairChapter repairChapter) {
+        return new RepairChapterResponse(
+                repairChapter.getId(),
+                repairChapter.getChapterNumber(),
+                repairChapter.getChapterName(),
+                repairChapter.getChapterType()
+        );
+    }
 }

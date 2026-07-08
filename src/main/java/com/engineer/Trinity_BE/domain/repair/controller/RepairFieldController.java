@@ -1,6 +1,5 @@
 package com.engineer.Trinity_BE.domain.repair.controller;
 
-import com.engineer.Trinity_BE.domain.repair.service.RepairFieldService;
 import com.engineer.Trinity_BE.global.dto.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
