@@ -9,7 +9,6 @@ public record RepairDetailResponse(
         String description,
         String chapterType,
         List<RepairLocationResponse> locations,
-        RepairFuselageResponse fuselage,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 ) {

@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface UserAuthTokenRepository extends JpaRepository<UserAuthToken, Long> {
     Optional<UserAuthToken> findByToken(String token);
-    List<UserAuthToken> findAllByUser_IdAndIsRevokedFalse(Long userId);
-    Optional<UserAuthToken> findByUser_IdAndIsRevokedFalse(Long userId);
+    List<UserAuthToken> findAllByUserIdAndIsRevokedFalse(Long userId);
+    Optional<UserAuthToken> findByUserIdAndIsRevokedFalse(Long userId);
 }

@@ -1,11 +1,7 @@
 package com.engineer.Trinity_BE.domain.repair.service;
 
-import com.engineer.Trinity_BE.domain.airplane.repository.AirplaneTypeRepository;
-import com.engineer.Trinity_BE.domain.repair.dto.response.RepairChapterResponse;
 import com.engineer.Trinity_BE.domain.repair.entity.RepairChapter;
-import com.engineer.Trinity_BE.domain.repair.enums.ChapterType;
 import com.engineer.Trinity_BE.domain.repair.repository.RepairChapterRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

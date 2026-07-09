@@ -79,7 +79,7 @@ public class AuthService {
 
         if(!userAuthToken.isValid()) {
             if(userAuthToken.getIsRevoked()) {
-                userAuthTokenRepository.findAllByUser_IdAndIsRevokedFalse(userAuthToken.getUser().getId())
+                userAuthTokenRepository.findAllByUserIdAndIsRevokedFalse(userAuthToken.getUser().getId())
                         .forEach(t -> {
                             t.revoke();
                             userAuthTokenRepository.save(t);
@@ -97,7 +97,7 @@ public class AuthService {
 
     @Transactional
     public void logout(Long userId) {
-        userAuthTokenRepository.findByUser_IdAndIsRevokedFalse(userId)
+        userAuthTokenRepository.findByUserIdAndIsRevokedFalse(userId)
                 .ifPresent(t -> {
                     t.revoke();
                     userAuthTokenRepository.save(t);
@@ -105,7 +105,7 @@ public class AuthService {
     }
 
     private TokenResponse issueTokens(User user) {
-        userAuthTokenRepository.findByUser_IdAndIsRevokedFalse(user.getId())
+        userAuthTokenRepository.findByUserIdAndIsRevokedFalse(user.getId())
                 .ifPresent(t -> {
                     t.revoke();
                     userAuthTokenRepository.save(t);

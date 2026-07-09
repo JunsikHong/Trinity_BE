@@ -12,6 +12,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Builder
@@ -34,8 +36,14 @@ public class Repair {
     @JoinColumn(name = "airplane_id", nullable = false)
     private Airplane airplane;
 
+    @OneToMany(mappedBy = "repair")
+    private List<RepairLocationItem> repairLocationItems = new ArrayList<>();
+
     @Column(name = "description")
     private String description;
+
+    @Column(name = "repair_at")
+    private LocalDateTime repairAt;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -47,4 +55,9 @@ public class Repair {
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
+
+    public void update(String description, LocalDateTime repairAt) {
+        this.description = description;
+        this.repairAt = repairAt;
+    }
 }
