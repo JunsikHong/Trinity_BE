@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface RepairLocationRepository extends JpaRepository<RepairLocation, Long> {
 
-    List<RepairLocation> findAllByRepairChapterIdAndIsActive(Long repairChapterId);
+    List<RepairLocation> findAllByRepairChapterIdAndIsActiveTrue(Long repairChapterId);
 }

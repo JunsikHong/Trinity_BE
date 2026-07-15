@@ -16,6 +16,6 @@ public class RepairChapterService {
     private final RepairChapterRepository repairChapterRepository;
 
     public List<RepairChapter> findAllByAirplaneTypeId(Long airplaneTypeId) {
-        return repairChapterRepository.findAllByAirplaneTypeIdAndIsActive(airplaneTypeId);
+        return repairChapterRepository.findAllByAirplaneTypeIdAndIsActiveTrue(airplaneTypeId);
     }
 }

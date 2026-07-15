@@ -45,4 +45,5 @@ public class AirplaneController {
                 }).collect(Collectors.toList());
         return ResponseEntity.ok(ApiResponse.success("AIRPLANE_LIST", responses));
     }
+
 }
