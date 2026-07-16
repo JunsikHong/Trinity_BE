@@ -29,6 +29,18 @@ public class RepairLocation {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "code")
+    private String code;
+
+    @Column(name = "section")
+    private Integer section;
+
+    @Column(name = "input_type")
+    private String inputType;
+
+    @Column(name = "sort_order")
+    private Integer sortOrder;
+
     @Column(name = "is_active")
     private boolean isActive;
 

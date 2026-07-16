@@ -16,4 +16,8 @@ public class RepairLocationService {
     public List<RepairLocation> findAllByRepairChapterId(Long repairChapterId) {
         return repairLocationRepository.findAllByRepairChapterIdAndIsActiveTrue(repairChapterId);
     }
+
+    public List<RepairLocation> findAll() {
+        return repairLocationRepository.findAll();
+    }
 }
