@@ -44,4 +44,22 @@ public class RepairLocation {
     @Column(name = "is_active")
     private boolean isActive;
 
+    public void update(
+            RepairChapter repairChapter,
+            String name,
+            String code,
+            Integer section,
+            String inputType,
+            Integer sortOrder,
+            boolean isActive
+    ) {
+        this.repairChapter = repairChapter;
+        this.name = name;
+        this.code = code;
+        this.section = section;
+        this.inputType = inputType;
+        this.sortOrder = sortOrder;
+        this.isActive = isActive;
+    }
+
 }
