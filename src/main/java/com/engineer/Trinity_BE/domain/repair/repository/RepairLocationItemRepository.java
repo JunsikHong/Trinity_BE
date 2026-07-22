@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RepairLocationItemRepository extends JpaRepository<RepairLocationItem, Long> {
 
+    void deleteByRepairId(Long repairId);
 }

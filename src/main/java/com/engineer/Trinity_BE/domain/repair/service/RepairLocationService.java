@@ -32,6 +32,7 @@ public class RepairLocationService {
                 .code(request.code())
                 .section(request.section())
                 .inputType(request.inputType())
+                .inputDescription(request.inputDescription())
                 .sortOrder(request.sortOrder())
                 .isActive(request.isActive())
                 .build();
@@ -49,6 +50,7 @@ public class RepairLocationService {
                 request.code(),
                 request.section(),
                 request.inputType(),
+                request.inputDescription(),
                 request.sortOrder(),
                 request.isActive()
         );

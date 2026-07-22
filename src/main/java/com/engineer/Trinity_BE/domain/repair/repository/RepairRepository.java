@@ -35,4 +35,6 @@ public interface RepairRepository extends JpaRepository<Repair, Long> {
               and rc.isActive = true
             """)
     Optional<Repair> findDetail(Long repairId);
+
+    Optional<Repair> findByIdAndUserId(Long id, Long userId);
 }

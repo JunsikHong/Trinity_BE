@@ -1,7 +1,6 @@
 package com.engineer.Trinity_BE.domain.repair.entity;
 
 import com.engineer.Trinity_BE.domain.airplane.entity.Airplane;
-import com.engineer.Trinity_BE.domain.airplane.entity.AirplaneType;
 import com.engineer.Trinity_BE.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -36,7 +35,11 @@ public class Repair {
     @JoinColumn(name = "airplane_id", nullable = false)
     private Airplane airplane;
 
-    @OneToMany(mappedBy = "repair")
+    @OneToMany(
+            mappedBy = "repair",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private List<RepairLocationItem> repairLocationItems = new ArrayList<>();
 
     @Column(name = "description")
@@ -59,5 +62,9 @@ public class Repair {
     public void update(String description, LocalDateTime repairAt) {
         this.description = description;
         this.repairAt = repairAt;
+    }
+
+    public void delete() {
+        this.deletedAt = LocalDateTime.now();
     }
 }

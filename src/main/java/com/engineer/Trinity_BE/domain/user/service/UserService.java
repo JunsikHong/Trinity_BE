@@ -4,6 +4,7 @@ import com.engineer.Trinity_BE.domain.user.dto.response.UserMeResponse;
 import com.engineer.Trinity_BE.domain.user.entity.User;
 import com.engineer.Trinity_BE.domain.user.repository.UserRepository;
 import com.engineer.Trinity_BE.global.security.principal.CustomUserDetails;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.boot.model.naming.IllegalIdentifierException;
@@ -22,5 +23,10 @@ public class UserService {
         User user = userRepository.findById(userDetails.getUserId())
                 .orElseThrow(() -> new IllegalIdentifierException("사용자를 찾을 수 없습니다."));
         return new UserMeResponse(user);
+    }
+
+    public User findOne(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("사용자를 찾을 수 없습니다."));
     }
 }

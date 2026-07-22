@@ -3,7 +3,6 @@ package com.engineer.Trinity_BE.domain.repair.dto.response;
 import com.engineer.Trinity_BE.domain.repair.entity.Repair;
 import com.engineer.Trinity_BE.domain.repair.entity.RepairLocationItem;
 
-import javax.xml.stream.Location;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -33,6 +32,7 @@ public record RepairResponse(
     public record LocationItem(
             Long locationId,
             String locationName,
+            String locationCode,
 
             Long chapterId,
             Integer chapterNumber,
@@ -44,6 +44,7 @@ public record RepairResponse(
             return new LocationItem(
                     item.getRepairLocation().getId(),
                     item.getRepairLocation().getName(),
+                    item.getRepairLocation().getCode(),
                     item.getRepairLocation().getRepairChapter().getId(),
                     item.getRepairLocation().getRepairChapter().getChapterNumber(),
                     item.getRepairLocation().getRepairChapter().getChapterName(),

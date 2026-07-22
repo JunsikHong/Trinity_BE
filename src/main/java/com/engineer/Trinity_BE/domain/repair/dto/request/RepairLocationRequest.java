@@ -8,6 +8,7 @@ public record RepairLocationRequest(
         String code,
         Integer section,
         String inputType,
+        String inputDescription,
         Integer sortOrder,
         boolean isActive
 ) {

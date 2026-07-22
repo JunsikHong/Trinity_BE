@@ -5,9 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Builder
@@ -26,6 +26,9 @@ public class RepairLocation {
     @JoinColumn(name = "repair_chapter_id", nullable = false)
     private RepairChapter repairChapter;
 
+    @OneToMany(mappedBy = "repairLocation")
+    private List<RepairLocationItem> repairLocationItems = new ArrayList<>();
+
     @Column(name = "name")
     private String name;
 
@@ -37,6 +40,9 @@ public class RepairLocation {
 
     @Column(name = "input_type")
     private String inputType;
+
+    @Column(name = "input_description")
+    private String inputDescription;
 
     @Column(name = "sort_order")
     private Integer sortOrder;
@@ -50,6 +56,7 @@ public class RepairLocation {
             String code,
             Integer section,
             String inputType,
+            String inputDescription,
             Integer sortOrder,
             boolean isActive
     ) {
@@ -58,6 +65,7 @@ public class RepairLocation {
         this.code = code;
         this.section = section;
         this.inputType = inputType;
+        this.inputDescription = inputDescription;
         this.sortOrder = sortOrder;
         this.isActive = isActive;
     }

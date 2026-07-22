@@ -6,6 +6,7 @@ import lombok.Builder;
 public record RepairChapterResponse (
         Long id,
         Integer chapterNumber,
-        String chapterName
+        String chapterName,
+        String chapterDescription
 ) {
 }

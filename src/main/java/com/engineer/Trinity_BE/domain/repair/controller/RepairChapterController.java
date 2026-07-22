@@ -36,6 +36,7 @@ public class RepairChapterController {
                             .id(repairChapter.getId())
                             .chapterNumber(repairChapter.getChapterNumber())
                             .chapterName(repairChapter.getChapterName())
+                            .chapterDescription(repairChapter.getChapterDescription())
                             .build();
                 }).collect(Collectors.toList());
         return ResponseEntity.ok(ApiResponse.success("CHAPTER_LIST", responses));

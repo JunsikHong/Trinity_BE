@@ -33,6 +33,9 @@ public class RepairChapter {
     @Column(name = "chapter_name")
     private String chapterName;
 
+    @Column(name = "chapter_description")
+    private String chapterDescription;
+
     @Column(name = "is_active")
     private boolean isActive;
 }
