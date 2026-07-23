@@ -2,7 +2,11 @@ package com.engineer.Trinity_BE.domain.repair.controller;
 
 import com.engineer.Trinity_BE.domain.airplane.entity.Airplane;
 import com.engineer.Trinity_BE.domain.airplane.service.AirplaneService;
+import com.engineer.Trinity_BE.domain.repair.dto.enums.RepairSortBy;
+import com.engineer.Trinity_BE.domain.repair.dto.enums.RepairSortDirection;
 import com.engineer.Trinity_BE.domain.repair.dto.request.RepairRequest;
+import com.engineer.Trinity_BE.domain.repair.dto.request.RepairSearchRequest;
+import com.engineer.Trinity_BE.domain.repair.dto.response.CursorPageResponse;
 import com.engineer.Trinity_BE.domain.repair.dto.response.RepairResponse;
 import com.engineer.Trinity_BE.domain.repair.entity.Repair;
 import com.engineer.Trinity_BE.domain.repair.entity.RepairChapter;
@@ -15,10 +19,13 @@ import com.engineer.Trinity_BE.domain.user.service.UserService;
 import com.engineer.Trinity_BE.global.dto.response.ApiResponse;
 import com.engineer.Trinity_BE.global.security.principal.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -32,11 +39,20 @@ public class RepairController {
     private final RepairLocationItemService repairLocationItemService;
 
     @GetMapping("/{airplaneId}")
-    public ResponseEntity<ApiResponse<List<RepairResponse>>> findAll(
-            @PathVariable Long airplaneId
+    public ResponseEntity<ApiResponse<CursorPageResponse<RepairResponse>>> findAll(
+            @PathVariable Long airplaneId,
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) Long chapterId,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @RequestParam(defaultValue = "REPAIR_AT") RepairSortBy sortBy,
+            @RequestParam(defaultValue = "DESC") RepairSortDirection sortDirection,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime cursorValue,
+            @RequestParam(required = false) Long cursorId,
+            @RequestParam(defaultValue = "20") int size
     ) {
-        List<RepairResponse> responses = repairService.findAllByAirplaneId(airplaneId)
-                        .stream().map(RepairResponse::from).toList();
+        RepairSearchRequest request = new RepairSearchRequest(search, chapterId, startDate, endDate, sortBy, sortDirection);
+        CursorPageResponse<RepairResponse> responses = repairService.findAllByAirplaneId(airplaneId, request, cursorValue, cursorId, size);
         return ResponseEntity.ok(ApiResponse.success("REPAIR_LIST", responses));
     }
 
