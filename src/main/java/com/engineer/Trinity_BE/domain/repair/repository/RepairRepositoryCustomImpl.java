@@ -11,6 +11,7 @@ import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -26,7 +27,7 @@ public class RepairRepositoryCustomImpl implements RepairRepositoryCustom{
         String order = asc ? "asc" : "desc";
 
         StringBuilder jpql = new StringBuilder("""
-                select distinct r.id
+                select distinct r.id, %s
                 from Repair r
                 join r.repairLocationItems rli
                 join rli.repairLocation rl
@@ -35,7 +36,7 @@ public class RepairRepositoryCustomImpl implements RepairRepositoryCustom{
                   and r.deletedAt is null
                   and rl.isActive = true
                   and rc.isActive = true
-                """);
+                """.formatted(sortColumn));
 
         if(StringUtils.hasText(request.search())) {
             jpql.append(" and r.description like :search ");
@@ -57,7 +58,9 @@ public class RepairRepositoryCustomImpl implements RepairRepositoryCustom{
             jpql.append(" and (%s %s :cursorValue or ($s = :cursorValue and r.id %s :cursorId)) ".formatted(sortColumn, cmp, sortColumn, cmp));
         }
 
-        TypedQuery<Long> query = em.createQuery(jpql.toString(), Long.class);
+        jpql.append(" order by %s %s, r.id %s".formatted(sortColumn, order, order));
+
+        TypedQuery<Object[]> query = em.createQuery(jpql.toString(), Object[].class);
         query.setParameter("airplaneId", airplaneId);
 
         if(StringUtils.hasText(request.search())) {
@@ -83,6 +86,6 @@ public class RepairRepositoryCustomImpl implements RepairRepositoryCustom{
 
         query.setMaxResults(size);
 
-        return query.getResultList();
+        return query.getResultList().stream().map(row -> (Long) row[0]).collect(Collectors.toList());
     }
 }
