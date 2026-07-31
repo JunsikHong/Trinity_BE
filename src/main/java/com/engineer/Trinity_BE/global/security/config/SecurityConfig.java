@@ -51,6 +51,8 @@ public class SecurityConfig {
                         // 삭제: EDITOR, ADMIN (본인 글 여부는 Service에서 검증)
                         .requestMatchers(HttpMethod.DELETE, "/api/repair/**").hasAnyRole("EDITOR", "ADMIN")
 
+                        .requestMatchers("/api/v1/repair-file/**").permitAll()
+
                         // 나머지 요청: 로그인 필요
                         .anyRequest().authenticated()
                 )

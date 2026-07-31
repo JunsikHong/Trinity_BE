@@ -9,8 +9,10 @@ import com.engineer.Trinity_BE.domain.repair.dto.request.RepairSearchRequest;
 import com.engineer.Trinity_BE.domain.repair.dto.response.CursorPageResponse;
 import com.engineer.Trinity_BE.domain.repair.dto.response.RepairResponse;
 import com.engineer.Trinity_BE.domain.repair.entity.Repair;
-import com.engineer.Trinity_BE.domain.repair.entity.RepairChapter;
-import com.engineer.Trinity_BE.domain.repair.service.*;
+import com.engineer.Trinity_BE.domain.repair.entity.RepairFile;
+import com.engineer.Trinity_BE.domain.repair.service.RepairFileService;
+import com.engineer.Trinity_BE.domain.repair.service.RepairLocationItemService;
+import com.engineer.Trinity_BE.domain.repair.service.RepairService;
 import com.engineer.Trinity_BE.domain.user.entity.User;
 import com.engineer.Trinity_BE.domain.user.service.UserService;
 import com.engineer.Trinity_BE.global.dto.response.ApiResponse;
@@ -60,7 +62,9 @@ public class RepairController {
     public ResponseEntity<ApiResponse<RepairResponse>> findOne(
             @PathVariable Long repairId
     ) {
-        RepairResponse response = RepairResponse.from(repairService.findOne(repairId));
+        Repair repair = repairService.findOne(repairId);
+        List<RepairFile> files = repairFileService.findAll(repairId);
+        RepairResponse response = RepairResponse.from(repair,files);
         return ResponseEntity.ok(ApiResponse.success("REPAIR_DETAIL", response));
     }
 
@@ -94,8 +98,8 @@ public class RepairController {
         User user = userService.findOne(customUserDetails.getUserId());
         Repair repair = repairService.update(user, id, request);
         repairLocationItemService.update(repair, request);
-        repairFileService.create(repair, files);
         repairFileService.delete(deleteFiles);
+        repairFileService.create(repair, files);
         return ResponseEntity.ok(ApiResponse.success("LOCATION_UPDATE", null));
     }
 
@@ -103,8 +107,9 @@ public class RepairController {
     public ResponseEntity<ApiResponse<Void>> delete(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @PathVariable Long id
-    ) {
+    ) throws Exception{
         User user = userService.findOne(customUserDetails.getUserId());
+        repairFileService.deleteByRepair(id);
         repairService.delete(user, id);
         return ResponseEntity.ok(ApiResponse.success("REPAIR_DELETE", null));
     }

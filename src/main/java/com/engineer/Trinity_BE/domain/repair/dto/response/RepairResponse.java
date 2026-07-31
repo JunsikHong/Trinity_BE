@@ -1,6 +1,7 @@
 package com.engineer.Trinity_BE.domain.repair.dto.response;
 
 import com.engineer.Trinity_BE.domain.repair.entity.Repair;
+import com.engineer.Trinity_BE.domain.repair.entity.RepairFile;
 import com.engineer.Trinity_BE.domain.repair.entity.RepairLocationItem;
 
 import java.time.LocalDateTime;
@@ -13,9 +14,11 @@ public record RepairResponse(
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
 
-        List<LocationItem> locationItems
+        List<LocationItem> locationItems,
+        List<FileResponse> files
+
 ) {
-    public static RepairResponse from (Repair repair) {
+    public static RepairResponse from (Repair repair, List<RepairFile> files) {
         return new RepairResponse(
                 repair.getId(),
                 repair.getDescription(),
@@ -25,8 +28,29 @@ public record RepairResponse(
 
                 repair.getRepairLocationItems().stream()
                         .map(LocationItem::from)
-                        .toList()
+                        .toList(),
+
+                files == null ? List.of() : files.stream().map(FileResponse::from).toList()
         );
+    }
+
+    public record FileResponse(
+            Long id,
+            String originalName,
+            String storedName,
+            String mimeType,
+            Long size
+    ) {
+        public static FileResponse from(RepairFile file) {
+            return new FileResponse(
+                    file.getId(),
+                    file.getOriginalName(),
+                    file.getStoredName(),
+                    file.getMimeType(),
+                    file.getSize()
+            );
+        }
+
     }
 
     public record LocationItem(

@@ -7,6 +7,7 @@ import com.engineer.Trinity_BE.domain.repair.dto.request.RepairSearchRequest;
 import com.engineer.Trinity_BE.domain.repair.dto.response.CursorPageResponse;
 import com.engineer.Trinity_BE.domain.repair.dto.response.RepairResponse;
 import com.engineer.Trinity_BE.domain.repair.entity.Repair;
+import com.engineer.Trinity_BE.domain.repair.entity.RepairFile;
 import com.engineer.Trinity_BE.domain.repair.repository.RepairRepository;
 import com.engineer.Trinity_BE.domain.user.entity.User;
 import jakarta.persistence.EntityNotFoundException;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 public class RepairService {
 
     private final RepairRepository repairRepository;
+    private final RepairFileService repairFileService;
 
     public Repair findOne(Long repairId) {
         return repairRepository.findDetail(repairId)
@@ -54,7 +56,12 @@ public class RepairService {
 
         List<Repair> content = pageIds.stream().map(byId::get).toList();
 
-        List<RepairResponse> responses = content.stream().map(RepairResponse::from).toList();
+        Map<Long, RepairFile> files = repairFileService.findFirstFiles(pageIds);
+
+        List<RepairResponse> responses = content.stream().map(repair -> {
+            RepairFile file = files.get(repair.getId());
+            return RepairResponse.from(repair, file == null ? List.of() : List.of(file));
+        }).toList();
 
         Repair last = content.getLast();
         LocalDateTime nextCursorValue = request.sortBy() == RepairSortBy.CREATED_AT ? last.getCreatedAt() : last.getRepairAt();
